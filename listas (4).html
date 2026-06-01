@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listas — Folha a Folha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background-color: #0a0908;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1400&q=80');
+      background-size: cover;
+      background-position: center 50%;
+      filter: brightness(0.2) sepia(0.4);
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(15,14,12,0.2) 0%, rgba(15,14,12,0.88) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 1.5rem;
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-desc {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      color: #b0a48e;
+      font-style: italic;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .hero-line {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto;
+    }
+
+    /* ── ABAS ── */
+    .list-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .list-tabs button {
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--muted);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 1rem 1.6rem;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+      margin-bottom: -1px;
+    }
+
+    .list-tabs button:hover,
+    .list-tabs button.active {
+      color: var(--gold-light);
+      border-bottom-color: var(--gold);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── TÍTULOS DE SEÇÃO ── */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+
+    .section-subtitle {
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0.7rem 0 2.5rem;
+    }
+
+    /* ── LISTA DE LIVROS ── */
+    .book-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .book-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 0;
+      background: var(--bg-card);
+      transition: background 0.2s;
+    }
+
+    .book-item:hover { background: #1e1c17; }
+
+    .book-rank {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      color: var(--border);
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 0;
+      border-right: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .book-item:hover .book-rank { color: var(--gold); }
+
+    .book-info {
+      padding: 1.4rem 1.6rem;
+    }
+
+    .book-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--cream);
+      margin-bottom: 0.15rem;
+    }
+
+    .book-author {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      color: var(--gold);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .book-info p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .book-item { grid-template-columns: 56px 1fr; }
+      .book-rank { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="site-tagline">um refúgio para leitores apaixonados</p>
+    <h1 class="site-title">Folha <span>a</span> Folha</h1>
+    <div class="header-ornament"></div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resenhas.html">Resenhas</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="listas.html" class="active">Listas</a></li>
+      <li><a href="contatos.html">Contatos</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Folha a Folha</span>
+      <h1 class="hero-title">Listas</h1>
+      <p class="hero-desc">Curadoria literária para todos os momentos, humores e gêneros.</p>
+      <div class="hero-line"></div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- ABAS -->
+    <div class="list-tabs">
+      <button class="active" onclick="showTab('essenciais', this)">Essenciais</button>
+      <button onclick="showTab('brasileiros', this)">Literatura Brasileira</button>
+      <button onclick="showTab('ficcao', this)">Ficção Científica</button>
+    </div>
+
+    <!-- TAB: ESSENCIAIS -->
+    <div id="essenciais" class="tab-panel active">
+      <h2 class="section-title">10 Livros Essenciais da Literatura Mundial</h2>
+      <p class="section-subtitle">Uma lista para quem quer construir uma base literária sólida</p>
+      <div class="divider"></div>
+
+      <div class="book-list">
+
+        <div class="book-item">
+          <div class="book-rank">01</div>
+          <div class="book-info">
+            <h3>Dom Quixote</h3>
+            <p class="book-author">Miguel de Cervantes</p>
+            <p>Considerado o primeiro romance moderno. A história do cavaleiro que confunde moinhos de vento com gigantes é uma meditação atemporal sobre idealismo, loucura e a natureza da realidade.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">02</div>
+          <div class="book-info">
+            <h3>Crime e Castigo</h3>
+            <p class="book-author">Fiódor Dostoiévski</p>
+            <p>Um mergulho devastador na psicologia de um homem que acredita estar acima da moral comum. Dostoiévski antecipa a psicanálise décadas antes de Freud.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">03</div>
+          <div class="book-info">
+            <h3>Cem Anos de Solidão</h3>
+            <p class="book-author">Gabriel García Márquez</p>
+            <p>A saga da família Buendía e da cidade de Macondo. O realismo mágico em sua forma mais pura e poderosa, leitura obrigatória para qualquer leitor sério.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">04</div>
+          <div class="book-info">
+            <h3>Mrs Dalloway</h3>
+            <p class="book-author">Virginia Woolf</p>
+            <p>Um único dia em Londres, duas vidas que se cruzam sem se encontrar. Woolf inventa o fluxo de consciência e transforma o cotidiano em literatura transcendente.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">05</div>
+          <div class="book-info">
+            <h3>O Grande Gatsby</h3>
+            <p class="book-author">F. Scott Fitzgerald</p>
+            <p>Uma crítica mordaz ao sonho americano embalada numa prosa lírica irresistível. O verde no fim do píer nunca significou tanto.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB: BRASILEIROS -->
+    <div id="brasileiros" class="tab-panel">
+      <h2 class="section-title">Clássicos da Literatura Brasileira</h2>
+      <p class="section-subtitle">O que todo brasileiro deveria ler ao longo da vida</p>
+      <div class="divider"></div>
+
+      <div class="book-list">
+
+        <div class="book-item">
+          <div class="book-rank">01</div>
+          <div class="book-info">
+            <h3>Dom Casmurro</h3>
+            <p class="book-author">Machado de Assis</p>
+            <p>Capitu traiu ou não traiu? Esta é a pergunta que o Brasil continua fazendo mais de um século depois. Machado de Assis cria o narrador não confiável mais famoso da língua portuguesa.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">02</div>
+          <div class="book-info">
+            <h3>Grande Sertão: Veredas</h3>
+            <p class="book-author">João Guimarães Rosa</p>
+            <p>O livro mais importante da literatura brasileira, segundo muitos críticos. Uma odisseia pelo sertão que é também uma meditação sobre o bem, o mal e a alma humana.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">03</div>
+          <div class="book-info">
+            <h3>Torto Arado</h3>
+            <p class="book-author">Itamar Vieira Junior</p>
+            <p>Duas irmãs, uma língua cortada e décadas de trabalho quase escravo na Bahia. Vencedor do Jabuti 2020 e o romance mais importante da literatura brasileira recente.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">04</div>
+          <div class="book-info">
+            <h3>A Hora da Estrela</h3>
+            <p class="book-author">Clarice Lispector</p>
+            <p>O último romance de Clarice é ao mesmo tempo o mais simples e o mais filosófico. Macabéa é o Brasil invisível, e Rodrigo Menezes somos todos nós.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">05</div>
+          <div class="book-info">
+            <h3>Vidas Secas</h3>
+            <p class="book-author">Graciliano Ramos</p>
+            <p>A seca nordestina contada com uma economia de palavras tão severa quanto o próprio sertão. Fabiano, Sinhá Vitória e o cachorro Baleia são personagens inesquecíveis.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- TAB: FICÇÃO CIENTÍFICA -->
+    <div id="ficcao" class="tab-panel">
+      <h2 class="section-title">Os 5 Pilares da Ficção Científica</h2>
+      <p class="section-subtitle">Para quem quer começar ou aprofundar a leitura no gênero</p>
+      <div class="divider"></div>
+
+      <div class="book-list">
+
+        <div class="book-item">
+          <div class="book-rank">01</div>
+          <div class="book-info">
+            <h3>Duna</h3>
+            <p class="book-author">Frank Herbert</p>
+            <p>Política, religião e ecologia num universo galáctico construído com uma riqueza de detalhe incomparável. O mais literário dos grandes épicos de ficção científica.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">02</div>
+          <div class="book-info">
+            <h3>Neuromancer</h3>
+            <p class="book-author">William Gibson</p>
+            <p>O livro que inventou o ciberpunk e previu a internet, a realidade virtual e a vigilância digital décadas antes de existirem. Uma profecia em forma de romance noir.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">03</div>
+          <div class="book-info">
+            <h3>O Conto da Aia</h3>
+            <p class="book-author">Margaret Atwood</p>
+            <p>Gilead como espelho do presente. Atwood constrói uma distopia tão rigorosa historicamente que parece um relatório disfarçado de ficção.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">04</div>
+          <div class="book-info">
+            <h3>Solaris</h3>
+            <p class="book-author">Stanisław Lem</p>
+            <p>O encontro com uma inteligência verdadeiramente alienígena e a descoberta de que o maior obstáculo ao contato com o outro é a nossa própria mente.</p>
+          </div>
+        </div>
+
+        <div class="book-item">
+          <div class="book-rank">05</div>
+          <div class="book-info">
+            <h3>Fundação</h3>
+            <p class="book-author">Isaac Asimov</p>
+            <p>A queda de um império galáctico e a tentativa de preservar o conhecimento humano. Asimov inventa a psicohistória e escreve a ficção científica mais política de todos os tempos.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <strong>Folha a Folha</strong> Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    function showTab(id, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.list-tabs button').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Folha a Folha — Blog de Literatura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background-color: #0a0908;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1400&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.22) sepia(0.4);
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(15,14,12,0.3) 0%, rgba(15,14,12,0.85) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 1.5rem;
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #FFFFFF;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 6vw, 4.2rem);
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1.1;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-desc {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.1rem;
+      color: #b0a48e;
+      font-style: italic;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-line {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto;
+    }
+
+    /* ── SOBRE ── */
+    .sobre {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+      padding: 4.5rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+
+    .sobre-texto h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      color: var(--cream);
+      line-height: 1.25;
+      margin-bottom: 1rem;
+    }
+
+    .sobre-texto h2 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .sobre-texto p {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+
+    .sobre-texto a {
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+    .sobre-texto a:hover { border-color: var(--gold); }
+
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .stat-item {
+      background: var(--bg-card);
+      padding: 1.6rem 1.4rem;
+      transition: background 0.2s;
+    }
+    .stat-item:hover { background: #201e19; }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .stat-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── DESTAQUES ── */
+    .destaques-titulo {
+      margin-bottom: 2.5rem;
+    }
+
+    .destaques-titulo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+
+    .destaques-titulo p {
+      font-style: italic;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .destaques-titulo .linha-ouro {
+      width: 50px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0.7rem 0;
+    }
+
+    /* Cards com imagem linkada */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .card-img-link {
+      display: block;
+      overflow: hidden;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      filter: sepia(0.35) brightness(0.8);
+      transition: filter 0.35s, transform 0.35s;
+    }
+
+    .card:hover .card-img {
+      filter: sepia(0.1) brightness(1);
+      transform: scale(1.04);
+    }
+
+    .card-body {
+      padding: 1.4rem 1.4rem 1.6rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .card-body p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      flex: 1;
+      margin-bottom: 1.2rem;
+      line-height: 1.65;
+    }
+
+    .card-link {
+      align-self: flex-start;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .card-link:hover {
+      color: var(--gold-light);
+      border-color: var(--gold);
+    }
+
+    @media (max-width: 860px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .sobre { grid-template-columns: 1fr; gap: 2.5rem; }
+      .sobre-stats { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="site-tagline">um refúgio para leitores apaixonados</p>
+    <h1 class="site-title">Folha <span>a</span> Folha</h1>
+    <div class="header-ornament"></div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="resenhas.html">Resenhas</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="listas.html">Listas</a></li>
+      <li><a href="contatos.html">Contatos</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Blog de Literatura</span>
+      <h1 class="hero-title">Cada livro é uma janela<br>para outro mundo</h1>
+      <p class="hero-desc">
+        Resenhas honestas, lançamentos do mercado editorial e listas
+        curadas para ajudar você a escolher a próxima leitura.
+      </p>
+      <div class="hero-line"></div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- SOBRE -->
+    <section class="sobre">
+      <div class="sobre-texto">
+        <h2>Um espaço para quem vive <em>entre páginas</em></h2>
+        <p>
+          Bem-vindo ao <strong style="color:var(--cream)">Folha a Folha</strong>, um blog dedicado
+          à literatura em todas as suas formas. Aqui você encontra resenhas honestas, os lançamentos
+          mais aguardados do mercado editorial e listas cuidadosamente curadas.
+        </p>
+        <p>
+          Cada livro é uma janela para um mundo diferente, e nossa missão é
+          ajudar você a encontrar exatamente a janela que precisa abrir agora.
+        </p>
+        <p>
+          Quer trocar ideias sobre literatura? A nossa
+          <a href="contatos.html">página de contatos</a> está sempre aberta.
+        </p>
+      </div>
+
+      <div class="sobre-stats">
+        <div class="stat-item">
+          <div class="stat-num">+120</div>
+          <div class="stat-label">Resenhas publicadas</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">18</div>
+          <div class="stat-label">Gêneros cobertos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">Mensal</div>
+          <div class="stat-label">Novos lançamentos</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Amor por livros</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DESTAQUES -->
+    <section>
+      <div class="destaques-titulo">
+        <h2>Conteúdos em Destaque</h2>
+        <div class="linha-ouro"></div>
+        <p>Explore as nossas seções principais</p>
+      </div>
+
+      <div class="cards-grid">
+
+        <article class="card">
+          <a href="resenhas.html" class="card-img-link">
+            <img
+              class="card-img"
+              src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80"
+              alt="Pilha de livros com marcadores coloridos"
+            />
+          </a>
+          <div class="card-body">
+            <span class="card-tag">Seção</span>
+            <h3>Resenhas</h3>
+            <p>
+              Análises aprofundadas e honestas de clássicos e contemporâneos.
+              Saiba se o livro que você está de olho vale a pena antes de virar a primeira página.
+            </p>
+            <a href="resenhas.html" class="card-link">Ler resenhas →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <a href="lancamentos.html" class="card-img-link">
+            <img
+              class="card-img"
+              src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&q=80"
+              alt="Prateleira de livraria com livros novos"
+            />
+          </a>
+          <div class="card-body">
+            <span class="card-tag">Seção</span>
+            <h3>Lançamentos</h3>
+            <p>
+              Fique por dentro das novidades mais esperadas do mercado editorial.
+              Datas, sinopses e primeiras impressões direto para você.
+            </p>
+            <a href="lancamentos.html" class="card-link">Ver lançamentos →</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <a href="listas.html" class="card-img-link">
+            <img
+              class="card-img"
+              src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&q=80"
+              alt="Livros organizados em estante"
+            />
+          </a>
+          <div class="card-body">
+            <span class="card-tag">Seção</span>
+            <h3>Listas</h3>
+            <p>
+              Os melhores livros por gênero, por humor, por momento da vida.
+              Nossas listas ajudam você a escolher a próxima leitura com confiança.
+            </p>
+            <a href="listas.html" class="card-link">Ver listas →</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <strong>Folha a Folha</strong> Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>

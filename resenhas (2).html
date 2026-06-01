@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resenhas — Folha a Folha</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background-color: #0a0908;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1495640388908-05fa85288e61?w=1400&q=80');
+      background-size: cover;
+      background-position: center 40%;
+      filter: brightness(0.2) sepia(0.4);
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(15,14,12,0.2) 0%, rgba(15,14,12,0.88) 100%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 1.5rem;
+      max-width: 720px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero-desc {
+      font-family: 'EB Garamond', serif;
+      font-size: 1.05rem;
+      color: #b0a48e;
+      font-style: italic;
+      line-height: 1.7;
+      max-width: 500px;
+      margin: 0 auto 1.8rem;
+    }
+
+    .hero-line {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto;
+    }
+
+    /* ── RESENHA DESTAQUE ── */
+    .resenha-destaque {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 4rem;
+      align-items: start;
+      padding: 4rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4rem;
+    }
+
+    .resenha-capa {
+      position: sticky;
+      top: 100px;
+    }
+
+    .resenha-capa img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      filter: sepia(0.2) brightness(0.85);
+      display: block;
+      border: 1px solid var(--border);
+    }
+
+    .resenha-capa .nota-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--gold);
+      padding: 1.2rem 1.4rem;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nota-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      color: var(--gold);
+      line-height: 1;
+      font-weight: 700;
+    }
+
+    .nota-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .resenha-texto .badge {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .resenha-texto h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 0.4rem;
+    }
+
+    .resenha-texto .autor {
+      font-family: 'EB Garamond', serif;
+      font-style: italic;
+      color: var(--gold-light);
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .resenha-texto .meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resenha-texto h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem;
+      color: var(--cream);
+      margin: 2rem 0 0.7rem;
+    }
+
+    .resenha-texto p {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .resenha-texto blockquote {
+      border-left: 3px solid var(--gold);
+      margin: 1.8rem 0;
+      padding: 1rem 1.5rem;
+      background: var(--bg-card);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--cream);
+      line-height: 1.7;
+    }
+
+    /* ── MAIS RESENHAS — CARDS ── */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .card-img-link {
+      display: block;
+      overflow: hidden;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      filter: sepia(0.35) brightness(0.8);
+      transition: filter 0.35s, transform 0.35s;
+    }
+
+    .card:hover .card-img {
+      filter: sepia(0.1) brightness(1);
+      transform: scale(1.04);
+    }
+
+    .card-body {
+      padding: 1.4rem 1.4rem 1.6rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-tag {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-body h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+    }
+
+    .card-body p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      flex: 1;
+      margin-bottom: 1rem;
+      line-height: 1.65;
+    }
+
+    .card-nota {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-top: 1px solid var(--border);
+      padding-top: 0.8rem;
+      margin-top: auto;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+    }
+
+    .divider {
+      width: 50px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0.7rem 0 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .resenha-destaque { grid-template-columns: 1fr; gap: 2rem; }
+      .resenha-capa { position: static; }
+      .resenha-capa img { height: 260px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <p class="site-tagline">um refúgio para leitores apaixonados</p>
+    <h1 class="site-title">Folha <span>a</span> Folha</h1>
+    <div class="header-ornament"></div>
+  </header>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="resenhas.html" class="active">Resenhas</a></li>
+      <li><a href="lancamentos.html">Lançamentos</a></li>
+      <li><a href="listas.html">Listas</a></li>
+      <li><a href="contatos.html">Contatos</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-eyebrow">Folha a Folha</span>
+      <h1 class="hero-title">Resenhas</h1>
+      <p class="hero-desc">Análises honestas e aprofundadas, porque ler bem começa por escolher bem.</p>
+      <div class="hero-line"></div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- RESENHA EM DESTAQUE -->
+    <div class="resenha-destaque">
+
+      <div class="resenha-capa">
+        <img
+          src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&q=80"
+          alt="Livros sobre mesa"
+        />
+        <div class="nota-box">
+          <div class="nota-num">10</div>
+          <div>
+            <div class="nota-label">Nota</div>
+            <div style="color:var(--cream); font-family:'EB Garamond',serif; font-size:0.9rem;">Obra-prima absoluta</div>
+          </div>
+        </div>
+      </div>
+
+      <article class="resenha-texto">
+        <span class="badge">Resenha em Destaque · Ficção Literária</span>
+        <h1>Cem Anos de Solidão</h1>
+        <p class="autor">Gabriel García Márquez</p>
+        <p class="meta">Publicado em 1967 · Harper & Row · Resenha por Folha a Folha</p>
+
+        <p>
+          Há obras que não se lêem, se habitam. <em>Cem Anos de Solidão</em> é uma dessas raras
+          construções literárias em que o leitor entra como forasteiro e sai, algumas centenas de páginas
+          depois, com a estranha certeza de que sempre pertenceu àquele lugar chamado Macondo.
+        </p>
+
+        <h2>Uma saga que transcende gerações</h2>
+        <p>
+          García Márquez narra sete gerações da família Buendía com uma voz tão serena diante do
+          impossível que o sobrenatural se torna banal, e o banal, milagroso. O realismo mágico aqui
+          não é artifício: é o modo de ver de um povo, a linguagem de uma América Latina que nunca
+          separou o mito da história.
+        </p>
+
+        <blockquote>
+          "Era como se Deus houvesse decidido pôr à prova toda capacidade de surpresa e mantivesse
+          os habitantes de Macondo num permanente vaivém entre o alumbramento e o desengano, a dúvida
+          e a revelação, ao extremo de já não saber onde ficavam os limites da realidade."
+        </blockquote>
+
+        <h2>Linguagem e estrutura</h2>
+        <p>
+          A prosa de Márquez é densa mas nunca pesada. Cada frase carrega o peso de anos, cada nome
+          repetido, e os Buendía adoram repetir nomes, ecoa no tempo como um sinal de que a história
+          é cíclica, que os erros se herdam tanto quanto os traços físicos.
+        </p>
+        <p>
+          A tradução para o português preserva a musicalidade do espanhol original com admirável
+          elegância. Ler em português é uma experiência plena; imaginar o original é quase excessivo.
+        </p>
+
+        <h2>Vale a leitura?</h2>
+        <p>
+          Para quem nunca leu: sim, sem hesitação, mesmo que seja necessário reler o início após
+          as primeiras cinquenta páginas para não se perder nos nomes. Para quem já leu: volte.
+          A cada releitura, Macondo revela uma camada que você não havia percebido antes.
+        </p>
+      </article>
+
+    </div>
+
+    <!-- MAIS RESENHAS -->
+    <section>
+      <h2 class="section-title">Mais Resenhas</h2>
+      <div class="divider"></div>
+
+      <div class="cards-grid">
+
+        <article class="card">
+          <a href="#" class="card-img-link">
+            <img
+              class="card-img"
+              src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&q=80"
+              alt="Livros antigos em estante de madeira"
+            />
+          </a>
+          <div class="card-body">
+            <span class="card-tag">Ficção Distópica</span>
+            <h3>1984</h3>
+            <p>
+              Uma obra que envelheceu ao contrário: quanto mais o tempo passa, mais relevante parece.
+              O Grande Irmão nunca foi tão presente quanto hoje.
+            </p>
+            <div class="card-nota">George Orwell · Nota: 9.5/10</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <a href="#" class="card-img-link">
+            <img
+              class="card-img"
+              src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&q=80"
+              alt="Pessoa lendo livro em poltrona"
+            />
+          </a>
+          <div class="card-body">
+            <span class="card-tag">Romance Histórico</span>
+            <h3>O Nome da Rosa</h3>
+            <p>
+              Um labirinto de papel. Eco constrói um thriller medieval que é ao mesmo tempo filosofia,
+              semiótica e puro entretenimento. Raro equilíbrio.
+            </p>
+            <div class="card-nota">Umberto Eco · Nota: 9/10</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <a href="#" class="card-img-link">
+            <img
+              class="card-img"
+              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80"
+              alt="Caderno aberto com caneta ao lado"
+            />
+          </a>
+          <div class="card-body">
+            <span class="card-tag">Ficção Científica</span>
+            <h3>Duna</h3>
+            <p>
+              A ópera espacial mais política já escrita. Herbert usa a ficção científica como lente
+              para discutir religião, ecologia e poder de modo que poucos autores ousaram.
+            </p>
+            <div class="card-nota">Frank Herbert · Nota: 9.5/10</div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2026 <strong>Folha a Folha</strong> Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
